@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-config-ubclaunchpad": "^2.1.6",
     "jest-expo": "^21.0.2",
     "react-native-scripts": "1.5.0",
     "react-test-renderer": "16.0.0-alpha.12"
