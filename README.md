@@ -25,6 +25,9 @@ Run tests.
 yarn test
 ```
 
+### Adding a new screen
+Create a component in `views` implementing the screen, and add it to the Navigator in `App.js`. You can navigate to screens from any view-level component using `this.props.navigation.navigate(routeName)`.
+
 ## :shipit: Deployment
 
 No where to deploy to.
