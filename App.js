@@ -1,10 +1,10 @@
 import { AppRegistry } from 'react-native';
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import Home from './views/Home';
-import EventList from './views/EventList';
-import EventFilter from './views/EventFilter';
-import EventDetail from './views/EventDetail';
+import Home from './src/views/Home';
+import EventList from './src/views/EventList';
+import EventFilter from './src/views/EventFilter';
+import EventDetail from './src/views/EventDetail';
 
 
 const Navigator = StackNavigator({
