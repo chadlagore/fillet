@@ -1,11 +1,15 @@
 import { AppRegistry } from 'react-native';
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import Home from './views/Home';
-import EventList from './views/EventList';
-import EventFilter from './views/EventFilter';
-import EventDetail from './views/EventDetail';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import Home from './src/views/Home';
+import EventList from './src/views/EventList';
+import EventFilter from './src/views/EventFilter';
+import EventDetail from './src/views/EventDetail';
+import reducer from './src/reducers';
 
+const store = createStore(reducer);
 
 const Navigator = StackNavigator({
     Home: { screen: Home },
@@ -18,6 +22,10 @@ AppRegistry.registerComponent('Navigator', () => Navigator);
 
 export default class App extends Component {
     render () {
-        return <Navigator />;
+        return (
+            <Provider store={store}>
+                <Navigator />
+            </Provider>
+        );
     }
 }
