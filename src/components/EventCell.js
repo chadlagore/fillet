@@ -23,11 +23,11 @@ export default class EventCell extends Component {
     /* Render a horizontal event box. */
     render () {
         return (
-            <TouchableOpacity style={styles.container}
+            <TouchableOpacity
+                style={styles.container}
                 onPress={() => {
                     console.log('User wants event description...');
-                }
-            }>
+                }}>
                 <View style={styles.infoContainer}>
                     <View style={styles.infoHeaderContainer}>
                         <Text style={styles.headerText}>
