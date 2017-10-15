@@ -20,6 +20,7 @@ export default class EventCell extends Component {
         this.state = { distance: 5 };
     }
 
+    /* Render a horizontal event box. */
     render () {
         return (
             <TouchableOpacity style={styles.container}
@@ -93,8 +94,5 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 18
-    },
-    descriptionText: {
-        textAlign: 'center'
     }
 });
