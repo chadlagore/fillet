@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { addEvents, clearEvents } from './../actions/events';
+import EventCell from './../components/EventCell'
 
 class EventList extends Component {
     render () {
@@ -17,6 +18,7 @@ class EventList extends Component {
         return (
             <View style={styles.container}>
                 <Text>List of events</Text>
+                <EventCell name="Fun event" />
                 <Button onPress={() => navigate('EventFilter')} title="Event Filter" />
                 <Button onPress={() => navigate('EventDetail')} title="Event Detail" />
                 <Button onPress={() => addEvents()} title="Add events" />
