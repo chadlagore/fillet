@@ -28,7 +28,8 @@ class EventList extends Component {
                         { name: 'Event5' }
                     ]}
                     renderItem={({ item }) => <EventCell name={item.name} />}
-                />
+                    keyExtractor={(item, index) => index}
+                    />
                 <Button onPress={() => navigate('EventFilter')} title="Event Filter" />
                 <Button onPress={() => navigate('EventDetail')} title="Event Detail" />
                 <Button onPress={() => addEvents()} title="Add events" />
