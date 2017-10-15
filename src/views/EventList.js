@@ -4,7 +4,8 @@ import {
     Button,
     StyleSheet,
     Text,
-    View
+    View,
+    FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import { addEvents, clearEvents } from './../actions/events';
@@ -18,7 +19,16 @@ class EventList extends Component {
         return (
             <View style={styles.container}>
                 <Text>List of events</Text>
-                <EventCell name="Fun event" />
+                <FlatList
+                    data={[
+                        { name: 'Event1' },
+                        { name: 'Event2' },
+                        { name: 'Event3' },
+                        { name: 'Event4' },
+                        { name: 'Event5' }
+                    ]}
+                    renderItem={({ item }) => <EventCell name={item.name} />}
+                />
                 <Button onPress={() => navigate('EventFilter')} title="Event Filter" />
                 <Button onPress={() => navigate('EventDetail')} title="Event Detail" />
                 <Button onPress={() => addEvents()} title="Add events" />
