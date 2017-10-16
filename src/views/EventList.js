@@ -15,10 +15,11 @@ import { getEvents } from './../api';
 class EventList extends Component {
     constructor (props) {
         super(props);
-        getEvents().then(res => {
-            return res.json().then(json => props.addEvents(json.results))
-        });
+        getEvents()
+            .then(res => res.json()
+                .then(json => props.addEvents(json.results)));
     }
+
     render () {
         const { navigate } = this.props.navigation;
         const { events } = this.props;
@@ -33,9 +34,15 @@ class EventList extends Component {
     }
 
     _renderEvents (events) {
+        const { navigate } = this.props.navigation;
         return (
             <ScrollView style={styles.eventsContainer}>
-                {events.map(ev => <EventCell event={ev} key={ev.title} />)}
+                {events.map(ev => (
+                    <EventCell
+                        event={ev}
+                        key={ev.title}
+                        onPress={() => navigate('EventDetail', { event: ev })} />
+                ))}
             </ScrollView>
         )
     }

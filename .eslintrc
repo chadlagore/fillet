@@ -53,7 +53,7 @@
 		"prefer-const": 2,
 		"react/jsx-closing-bracket-location": ["error", "after-props"],
 		"react/jsx-indent": ["error", 4],
-		"react/jsx-indent-props": ["error", "tab"],
+		"react/jsx-indent-props": ["error", 4],
 		"react/prop-types": 2,
 		"space-before-function-paren": "error",
 		"space-infix-ops": "error",
