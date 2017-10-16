@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {
     Text,
     TouchableOpacity,
-    AppRegistry,
     View,
     StyleSheet
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 
 /* A cell to represent an event in the EventList */
@@ -22,16 +22,17 @@ export default class EventCell extends Component {
 
     /* Render a horizontal event box. */
     render () {
+        const { event } = this.props
+        const { title } = event;
+        console.log(event);
         return (
             <TouchableOpacity
                 style={styles.container}
-                onPress={() => {
-                    console.log('User wants event description...');
-                }}>
+                onPress={() => console.log('User wants event description...')}>
                 <View style={styles.infoContainer}>
                     <View style={styles.infoHeaderContainer}>
                         <Text style={styles.headerText}>
-                            {this.props.name}
+                            {title}
                         </Text>
                     </View>
                     <View style={styles.infoDescriptionContainer}>
@@ -48,7 +49,7 @@ export default class EventCell extends Component {
                     </View>
                     <View style={styles.distanceDescription}>
                         <Text>
-                            {this.state.distance}
+                            12km
                         </Text>
                     </View>
                 </View>
@@ -57,8 +58,13 @@ export default class EventCell extends Component {
     }
 }
 
-AppRegistry.registerComponent('EventCell', () => EventCell);
-
+EventCell.propTypes = {
+    event: PropTypes.shape({
+        start_time: PropTypes.string.isRequired,
+        end_time: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired
+    })
+};
 
 const styles = StyleSheet.create({
     container: {

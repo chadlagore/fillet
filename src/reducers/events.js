@@ -10,7 +10,7 @@ export default (state = initialState, { type, payload }) => {
     switch (type) {
         // Add the events to the store
         case types.EVENTS_ADD:
-            return { ...state, events: [...state.events, ...payload] };
+            return { ...state, events: [...payload] };
         // Clear all events from the store
         case types.EVENTS_CLEAR:
             return { ...state, events: [] };
