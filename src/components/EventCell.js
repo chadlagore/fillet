@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import {
     Text,
     TouchableOpacity,
-    AppRegistry,
-    View,
     StyleSheet
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 
 /* A cell to represent an event in the EventList */
@@ -16,84 +15,41 @@ export default class EventCell extends Component {
      */
     constructor (props) {
         super(props);
-        // TODO: Redux.
-        this.state = { distance: 5 };
+        this.state = {};
     }
 
     /* Render a horizontal event box. */
     render () {
+        const { event, onPress } = this.props
+        const { title } = event;
+
         return (
             <TouchableOpacity
                 style={styles.container}
-                onPress={() => {
-                    console.log('User wants event description...');
-                }}>
-                <View style={styles.infoContainer}>
-                    <View style={styles.infoHeaderContainer}>
-                        <Text style={styles.headerText}>
-                            {this.props.name}
-                        </Text>
-                    </View>
-                    <View style={styles.infoDescriptionContainer}>
-                        <Text>
-                            A description or address.
-                        </Text>
-                    </View>
-                </View>
-                <View style={styles.distanceContainer}>
-                    <View style={styles.distanceHeader}>
-                        <Text style={styles.headerText}>
-                            Distance
-                        </Text>
-                    </View>
-                    <View style={styles.distanceDescription}>
-                        <Text>
-                            {this.state.distance}
-                        </Text>
-                    </View>
-                </View>
+                onPress={onPress}>
+                <Text style={styles.headerText}>
+                    {title}
+                </Text>
             </TouchableOpacity>
         );
     }
 }
 
-AppRegistry.registerComponent('EventCell', () => EventCell);
-
+EventCell.propTypes = {
+    event: PropTypes.shape({
+        start_time: PropTypes.string.isRequired,
+        end_time: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired
+    }),
+    onPress: PropTypes.func.isRequired
+};
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        flex: 0.20,
-        height: 80,
+        flexDirection: 'column',
+        flex: 1,
+        padding: 16,
         borderBottomWidth: 1,
-        borderTopWidth: 0.5
-    },
-    infoContainer: {
-        flex: 0.75,
-        justifyContent: 'flex-start',
-        flexDirection: 'column',
-        flexWrap: 'wrap',
-        borderRightWidth: 0.25
-    },
-    infoHeaderContainer: {
-        flex: 0.25
-    },
-    infoDescriptionContainer: {
-        flex: 0.75
-    },
-    distanceContainer: {
-        flex: 0.25,
-        justifyContent: 'flex-start',
-        flexDirection: 'column',
-        flexWrap: 'wrap'
-    },
-    distanceHeaderContainer: {
-        flex: 0.25
-    },
-    distanceDescriptionContainer:{
-        flex: 0.75
-    },
-    headerText: {
-        fontSize: 18
+        borderBottomColor: '#ccc'
     }
 });

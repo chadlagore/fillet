@@ -3,47 +3,47 @@ import PropTypes from 'prop-types';
 import {
     Button,
     StyleSheet,
+    ScrollView,
     Text,
-    View,
-    FlatList
+    View
 } from 'react-native';
+import EventCell from './../components/EventCell';
 import { connect } from 'react-redux';
 import { addEvents, clearEvents } from './../actions/events';
-import EventCell from './../components/EventCell'
+import { getEvents } from './../api';
 
 class EventList extends Component {
+    constructor (props) {
+        super(props);
+        getEvents()
+            .then(res => res.json()
+                .then(json => props.addEvents(json.results)));
+    }
+
     render () {
         const { navigate } = this.props.navigation;
-        const { events, addEvents, clearEvents } = this.props;
+        const { events } = this.props;
 
         return (
             <View style={styles.container}>
                 <Text>List of events</Text>
-                <FlatList
-                    data={[
-                        { name: 'Event1' },
-                        { name: 'Event2' },
-                        { name: 'Event3' },
-                        { name: 'Event4' },
-                        { name: 'Event5' }
-                    ]}
-                    renderItem={({ item }) => <EventCell name={item.name} />}
-                    keyExtractor={(item, index) => index}
-                    />
                 <Button onPress={() => navigate('EventFilter')} title="Event Filter" />
-                <Button onPress={() => navigate('EventDetail')} title="Event Detail" />
-                <Button onPress={() => addEvents()} title="Add events" />
-                <Button onPress={() => clearEvents()} title="Clear events" />
                 {this._renderEvents(events)}
             </View>
         );
     }
 
     _renderEvents (events) {
+        const { navigate } = this.props.navigation;
         return (
-            <View style={styles.eventsContainer}>
-                {events.map((ev, i) => <Text key={i}>{ev}</Text>)}
-            </View>
+            <ScrollView style={styles.eventsContainer}>
+                {events.map(ev => (
+                    <EventCell
+                        event={ev}
+                        key={ev.title}
+                        onPress={() => navigate('EventDetail', { event: ev })} />
+                ))}
+            </ScrollView>
         )
     }
 }
@@ -63,7 +63,7 @@ EventList.propTypes = {
 
 // NOTE: this is just for verifying redux is working happily
 const mapDispatchToProps = dispatch => ({
-    addEvents: () => dispatch(addEvents(['a', 'b', 'c'])),
+    addEvents: events => dispatch(addEvents(events)),
     clearEvents: () => dispatch(clearEvents())
 });
 
