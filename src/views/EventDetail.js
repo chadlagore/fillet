@@ -1,37 +1,57 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
     StyleSheet,
     Text,
     View,
     Button
 } from 'react-native';
+import MapView from 'react-native-maps';
 
 export default class EventDetail extends Component {
     render () {
         const { event } = this.props.navigation.state.params;
-        const { title } = event;
+        const { title, start, end, location } = event;
+        console.log(start.format('dddd, MMMM D at h:mmA'));
+        console.log(MapView);
+
         return (
             <View style={styles.container}>
-                <Text style={styles.titleText}>
-                    {title ? title : 'Inceptos Malesuada Tortor Condimentum Sollicitudin'}
+                <Text style={styles.title}>
+                    {title}
                 </Text>
-                <Text style={styles.locationText}>
-                    {'The Commodore Ballroom'}
+                <Text style={styles.venue}>
+                    No venue information yet :(
                 </Text>
-                <View style={styles.locationMapView}>
-                    <Text style={{color: 'white'}}>
-                        Event location map goes here
-                    </Text>
-                </View>
-                <Text>
-                    {'Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam quis risus eget urna mollis ornare vel eu leo.\n\nVestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.'}
+                <Text style={styles.time}>
+                    {start.format('dddd, MMMM D [at] h:mmA')}
+                </Text>
+                <MapView
+                    style={{ flex: 1 }}
+                    initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421
+                    }} />
+                <Text style={styles.description}>
+                    No description for now... Sorry!
                 </Text>
                 <Button
-                    onPress={this.props.onRsvpPress ? this.onRsvpPress : () => {}}
-                    title="RSVP to this Event" />
+                    onPress={this.handleRSVP}
+                    title="RSVP" />
             </View>
         );
     }
+
+    handleRSVP () {
+        /* eslint-disable no-console */
+        console.log('Pressed RSVP');
+    }
+}
+
+EventDetail.propTypes = {
+    navigation: PropTypes.object,
 }
 
 EventDetail.navigationOptions = {
@@ -42,7 +62,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: '5%',
-        justifyContent: 'flex-start',
         backgroundColor: '#fff'
     },
     titleText: {

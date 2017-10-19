@@ -11,7 +11,7 @@
 		"plugin:react/recommended"
 	],
 	"parserOptions": {
-		"ecmaVersion": 2016,
+		"ecmaVersion": 2017,
 		"ecmaFeatures": {
 			"classes": true,
 			"jsx": true,

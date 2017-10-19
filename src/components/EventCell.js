@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
+import Event from './../models/event'
 import PropTypes from 'prop-types';
 
 
@@ -36,11 +37,7 @@ export default class EventCell extends Component {
 }
 
 EventCell.propTypes = {
-    event: PropTypes.shape({
-        start_time: PropTypes.string.isRequired,
-        end_time: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired
-    }),
+    event: Event,
     onPress: PropTypes.func.isRequired
 };
 

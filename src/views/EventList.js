@@ -16,8 +16,7 @@ class EventList extends Component {
     constructor (props) {
         super(props);
         getEvents()
-            .then(res => res.json()
-                .then(json => props.addEvents(json.results)));
+            .then(res => props.addEvents(res));
     }
 
     render () {
