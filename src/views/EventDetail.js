@@ -1,63 +1,95 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
     StyleSheet,
     Text,
     View,
     Button
 } from 'react-native';
+import MapView from 'react-native-maps';
+import Event from './../models/event';
 
 export default class EventDetail extends Component {
     render () {
         const { event } = this.props.navigation.state.params;
-        const { title } = event;
+        const { title, description, venue, start, location } = event;
+
         return (
             <View style={styles.container}>
-                <Text style={styles.titleText}>
-                    {title ? title : 'Inceptos Malesuada Tortor Condimentum Sollicitudin'}
-                </Text>
-                <Text style={styles.locationText}>
-                    {'The Commodore Ballroom'}
-                </Text>
-                <View style={styles.locationMapView}>
-                    <Text style={{color: 'white'}}>
-                        Event location map goes here
+                <View style={styles.top}>
+                    <Text style={styles.venue}>
+                        Where: {venue}
+                    </Text>
+                    <Text style={styles.time}>
+                        When: {start.format('dddd, MMMM D [at] h:mmA')}
                     </Text>
                 </View>
-                <Text>
-                    {'Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam quis risus eget urna mollis ornare vel eu leo.\n\nVestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.'}
-                </Text>
-                <Button
-                    onPress={this.props.onRsvpPress ? this.onRsvpPress : () => {}}
-                    title="RSVP to this Event" />
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: 49.2827,
+                        longitude: -123.1207,
+                        latitudeDelta: 0.4,
+                        longitudeDelta: 0.1
+                    }}>
+                    <MapView.Marker
+                        coordinate={{
+                            latitude: location.lat,
+                            longitude: location.lon
+                        }}
+                        title={title}
+                        description={description} />
+                </MapView>
+                <View style={styles.bottom}>
+                    <Text style={styles.description}>
+                        {description}
+                    </Text>
+                    <Button
+                        onPress={this.handleRSVP}
+                        title="RSVP" />
+                </View>
             </View>
         );
     }
+
+    handleRSVP () {
+        /* eslint-disable no-console */
+        console.log('Pressed RSVP');
+    }
 }
 
-EventDetail.navigationOptions = {
-    title: 'Event Detail'
-};
+EventDetail.propTypes = {
+    navigation: PropTypes.shape({
+        state: PropTypes.shape({
+            params: PropTypes.shape({
+                event: Event
+            })
+        })
+    })
+}
+
+EventDetail.navigationOptions = ({ navigation }) => ({
+    title: navigation.state.params.event.title
+});
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: '5%',
-        justifyContent: 'flex-start',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingVertical: 8
     },
-    titleText: {
-        fontWeight: 'bold',
-        fontSize: 24,
-        paddingBottom: 6
+    top: {
+        paddingHorizontal: 8,
+        paddingBottom: 8
     },
-    locationText: {
-        fontWeight: '500',
-        color: 'grey',
-        paddingBottom: 4
+    venue: {
+        fontSize: 22
     },
-    locationMapView: {
-        backgroundColor: '#000',
-        height: '30%',
-        paddingBottom: 4
+    time: {
+        fontSize: 16,
+        color: '#999'
+    },
+    map: {
+        flex: 1
     }
 });

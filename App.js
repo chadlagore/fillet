@@ -20,6 +20,7 @@ const Navigator = StackNavigator({
 
 AppRegistry.registerComponent('Navigator', () => Navigator);
 
+/* eslint-disable react/prefer-stateless-function */
 export default class App extends Component {
     render () {
         return (

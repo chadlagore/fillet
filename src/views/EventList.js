@@ -11,13 +11,16 @@ import EventCell from './../components/EventCell';
 import { connect } from 'react-redux';
 import { addEvents, clearEvents } from './../actions/events';
 import { getEvents } from './../api';
+import mockEvent from './../mocks/event';
 
 class EventList extends Component {
     constructor (props) {
         super(props);
-        getEvents()
-            .then(res => res.json()
-                .then(json => props.addEvents(json.results)));
+        getEvents().then(
+            res => props.addEvents(res),
+            err => console.log(err)
+        );
+        props.addEvents([mockEvent]);
     }
 
     render () {
