@@ -12,7 +12,6 @@ const events = api('/events');
 // `opts` constrains the query, accepts keys:
 // lat, lon, start_time, end_time
 export async function getEvents (opts) {
-    console.log(events(opts));
     try {
         const res = await fetch(events(opts));
         const json = await res.json();
@@ -23,9 +22,7 @@ export async function getEvents (opts) {
             end: Moment(e.end_time)
         }));
     } catch (err) {
-        /* eslint-disable no-console */
-        console.log(err);
-        return err;
+        throw err;
     }
 }
 

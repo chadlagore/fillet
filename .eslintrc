@@ -33,7 +33,7 @@
 		"comma-dangle": ["error", "never"],
 		"comma-spacing": ["error", { "before": false, "after": true }],
 		"default-case": 2,
-		"dot-notation": ["error", {"allowKeywords": false}],
+		"dot-notation": ["error", {"allowKeywords": true}],
 		"eqeqeq": ["error", "always"],
 		"eol-last": ["error", "always"],
 		"func-call-spacing": ["error", "never"],

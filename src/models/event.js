@@ -7,5 +7,7 @@ export default PropTypes.shape({
     location: PropTypes.shape({
         lat: PropTypes.number.isRequired,
         lon: PropTypes.number.isRequired
-    })
+    }),
+    description: PropTypes.string,
+    venue: PropTypes.string
 });
