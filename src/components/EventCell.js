@@ -28,8 +28,11 @@ export default class EventCell extends Component {
             <TouchableOpacity
                 style={styles.container}
                 onPress={onPress}>
-                <Text style={styles.headerText}>
+                <Text style={styles.title} numberOfLines={1}>
                     {title}
+                </Text>
+                <Text style={styles.time}>
+                    {event.start.format('dddd, MMMM D [at] h:mmA')}
                 </Text>
             </TouchableOpacity>
         );
@@ -48,5 +51,13 @@ const styles = StyleSheet.create({
         padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc'
+    },
+    title: {
+        fontSize: 16,
+        color: '#333'
+    },
+    time: {
+        fontSize: 14,
+        color: '#666'
     }
 });

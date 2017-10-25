@@ -54,7 +54,7 @@ export default class EventDetail extends Component {
     }
 }
 
-const rsvpButton = ({ event }) => (
+const rsvpButton = () => (
     <Button
         onPress={() => console.log('TODO make this do something')}
         title="RSVP" />
@@ -95,5 +95,8 @@ const styles = StyleSheet.create({
     map: {
         flex: 1,
         height: 400
+    },
+    description: {
+        paddingHorizontal: 8
     }
 });
