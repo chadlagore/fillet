@@ -16,11 +16,10 @@ import mockEvent from './../mocks/event';
 class EventList extends Component {
     constructor (props) {
         super(props);
-        getEvents().then(
+        getEvents({ ...props.location }).then(
             res => props.addEvents(res),
-            err => console.log(err)
+            err => console.log(err) || props.addEvents([mockEvent])
         );
-        props.addEvents([mockEvent]);
     }
 
     render () {
@@ -52,12 +51,16 @@ class EventList extends Component {
 }
 
 EventList.navigationOptions = {
-    title: 'EventList'
+    title: 'Event List'
 };
 
 EventList.propTypes = {
     navigation: PropTypes.shape({
         navigate: PropTypes.func
+    }),
+    location: PropTypes.shape({
+        lat: PropTypes.number.isRequired,
+        lon: PropTypes.number.isRequired
     }),
     events: PropTypes.array,
     addEvents: PropTypes.func,
@@ -72,7 +75,8 @@ const mapDispatchToProps = dispatch => ({
 
 // Pull events from redux into props so we can display it
 const mapStateToProps = state => ({
-    events: state.events.events
+    events: state.events.events,
+    location: state.user.location
 });
 
 export default connect(

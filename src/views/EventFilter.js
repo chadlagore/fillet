@@ -16,7 +16,7 @@ export default class EventFilter extends Component {
 }
 
 EventFilter.navigationOptions = {
-    title: 'EventFilter'
+    title: 'Filter'
 };
 
 const styles = StyleSheet.create({
