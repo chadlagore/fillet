@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
+    Button,
     StyleSheet,
     TouchableOpacity,
     Text,
@@ -30,7 +31,7 @@ class EventFilter extends Component {
                 end_time: Moment(date).add(1, 'days').format('YYYY-MM-DD') }
             ).then(
                 res => this.props.addEvents(res),
-                err => console.log(err) || props.addEvents([mockEvent])
+                err => console.log(err) || this.props.addEvents([mockEvent])
         );
         console.log('A date has been picked: ', Moment(date));
         this._hideDateTimePicker();
@@ -38,10 +39,8 @@ class EventFilter extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <TouchableOpacity onPress={this._showDateTimePicker}>
-                    <Text>Set Date</Text>
-                </TouchableOpacity>
+            <View style={styles.container}>
+                <Button onPress={this._showDateTimePicker} title="Set date" />
                 <DateTimePicker
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm={this._handleDatePicked}
