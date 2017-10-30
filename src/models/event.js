@@ -8,6 +8,10 @@ export default PropTypes.shape({
         lat: PropTypes.number.isRequired,
         lon: PropTypes.number.isRequired
     }),
-    description: PropTypes.string,
+    distance: PropTypes.number.isRequired,
+    description: PropTypes.shape({
+        text: PropTypes.string,
+        html: PropTypes.string
+    }),
     venue: PropTypes.string
 });
