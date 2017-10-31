@@ -27,6 +27,8 @@ export async function getEvents (opts) {
             }
         }));
     } catch (err) {
+        /* eslint-disable no-console */
+        console.log(err);
         throw err;
     }
 }
