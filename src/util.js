@@ -13,7 +13,9 @@ export const buildURL = base => route => params => {
     const keys = Object.keys(params || {});
     const len = keys.length;
     if (len) {
-        url = keys.reduce((u, k, i) => `${u}${k}=${params[k]}${i < len - 1 ? '&' : ''}`, `${url}?`);
+        url = keys.reduce((u, k, i) => {
+            return `${u}${encodeURIComponent(k)}=${encodeURIComponent(params[k])}${i < len - 1 ? '&' : ''}`;
+        }, `${url}?`);
     }
     return url;
 }
