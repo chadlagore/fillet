@@ -7,8 +7,8 @@ export const mirror = list => list.reduce((map, str) => ({ [str]: str, ...map })
 // (['A', 'B'], 'C') => ['C_A', 'C_B']
 export const prepend = (list, preface) => list.map(el => `${preface}_${el}`);
 
-// Constructs a url from a base, a route, and a set of query params.
-export const buildURL = base => route => params => {
+// Constructs a request from a base, a route, and a set of parameters.
+export const buildRequest = base => (method, route) => (params, body, headers) => {
     let url = `${base}${route}`;
     const keys = Object.keys(params || {});
     const len = keys.length;
@@ -17,5 +17,9 @@ export const buildURL = base => route => params => {
             return `${u}${encodeURIComponent(k)}=${encodeURIComponent(params[k])}${i < len - 1 ? '&' : ''}`;
         }, `${url}?`);
     }
-    return url;
+    return [url, {
+        method: method,
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: (body ? JSON.stringify(body) : null)
+    }];
 }

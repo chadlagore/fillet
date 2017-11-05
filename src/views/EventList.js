@@ -16,7 +16,7 @@ import mockEvent from './../mocks/event';
 class EventList extends Component {
     constructor (props) {
         super(props);
-        getEvents().then(
+        getEvents(null, props.token).then(
             res => props.addEvents(res),
             err => console.log(err)
         );
@@ -72,7 +72,8 @@ const mapDispatchToProps = dispatch => ({
 
 // Pull events from redux into props so we can display it
 const mapStateToProps = state => ({
-    events: state.events.events
+    events: state.events.events,
+    token: state.user.token
 });
 
 export default connect(
