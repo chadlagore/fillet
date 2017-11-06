@@ -6,15 +6,12 @@ import {
     Text,
     View
 } from 'react-native';
-import {
-    GoogleSignin,
-    GoogleSigninButton
-} from 'react-native-google-signin';
 import { connect } from 'react-redux';
 import { setUser, setAuthToken, setLocation } from './../actions/user';
 import { getAuthToken } from './../api';
 /* eslint-disable import/named */
 import { Location, Permissions } from 'expo';
+import { Google } from 'expo';
 
 class Home extends Component {
     constructor (props) {
@@ -44,12 +41,13 @@ class Home extends Component {
     _renderSigninButtons() {
         if (!this.props.user) {
             return (
-                <GoogleSigninButton
-                    style={styles.google_signin}
-                    size={GoogleSigninButton.Size.Standard}
-                    color={GoogleSigninButton.Color.Light}
+                <Button
                     onPress={this._googleSignIn.bind(this)}
-                />
+                    style={styles.google_signin}>
+                    <Text>
+                        Sign in with Google
+                    </Text>
+                </Button>
             );
         }
         else {
@@ -71,27 +69,25 @@ class Home extends Component {
         .then(() => {
             GoogleSignin.signOut();
             this.props.setUser(undefined);
-            // GoogleSignin.currentUserAsync()
-            // .then(user => this.props.setUser(user));
         })
         .done();
     }
 
     _googleSignIn() {
-        GoogleSignin.signIn()
-        .then(user => {
-            console.log(user.idToken);
-            this.props.setUser(user);
-            getAuthToken({
-                service: 'google',
-                token: user.idToken
-            })
-            .then(
-                token => this.props.setAuthToken(token),
-                err => console.log(err)
-            );
+        let user = await Google.logInAsync({
+            iosClientId: "148567986475-hjkjihnqn54603235u4rhilh54osclcc.apps.googleusercontent.com",
+            webClientId: "148567986475-b6jh9fbl1d0186ku4gibml8619hafbnm.apps.googleusercontent.com"
+        });
+        console.log(user.idToken);
+        this.props.setUser(user);
+        getAuthToken({
+            service: 'google',
+            token: user.idToken
         })
-        .done();
+        .then(
+            token => this.props.setAuthToken(token),
+            err => console.log(err)
+        );
     }
 }
 
