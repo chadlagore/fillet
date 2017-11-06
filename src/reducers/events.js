@@ -1,4 +1,3 @@
-
 import { types } from './../actions/events';
 
 // Describes the initial state when the app starts up

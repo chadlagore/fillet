@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
     StyleSheet,
+    ScrollView,
     Text,
     View,
     Button
 } from 'react-native';
+/* eslint-disable import/default */
 import MapView from 'react-native-maps';
 import Event from './../models/event';
 
@@ -15,7 +17,7 @@ export default class EventDetail extends Component {
         const { title, description, venue, start, location } = event;
 
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <View style={styles.top}>
                     <Text style={styles.venue}>
                         Where: {venue}
@@ -37,18 +39,12 @@ export default class EventDetail extends Component {
                             latitude: location.lat,
                             longitude: location.lon
                         }}
-                        title={title}
-                        description={description} />
+                        title={title} />
                 </MapView>
-                <View style={styles.bottom}>
-                    <Text style={styles.description}>
-                        {description}
-                    </Text>
-                    <Button
-                        onPress={this.handleRSVP}
-                        title="RSVP" />
-                </View>
-            </View>
+                <Text style={styles.description}>
+                    {description.text}
+                </Text>
+            </ScrollView>
         );
     }
 
@@ -57,6 +53,12 @@ export default class EventDetail extends Component {
         console.log('Pressed RSVP');
     }
 }
+
+const rsvpButton = () => (
+    <Button
+        onPress={() => console.log('TODO make this do something')}
+        title="RSVP" />
+);
 
 EventDetail.propTypes = {
     navigation: PropTypes.shape({
@@ -69,7 +71,8 @@ EventDetail.propTypes = {
 }
 
 EventDetail.navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.event.title
+    title: navigation.state.params.event.title,
+    headerRight: rsvpButton(navigation.state.params.event)
 });
 
 const styles = StyleSheet.create({
@@ -90,6 +93,10 @@ const styles = StyleSheet.create({
         color: '#999'
     },
     map: {
-        flex: 1
+        flex: 1,
+        height: 400
+    },
+    description: {
+        paddingHorizontal: 8
     }
 });

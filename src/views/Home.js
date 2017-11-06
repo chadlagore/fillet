@@ -11,16 +11,31 @@ import {
     GoogleSigninButton
 } from 'react-native-google-signin';
 import { connect } from 'react-redux';
-import { setUser, setAuthToken } from './../actions/user';
+import { setUser, setAuthToken, setLocation } from './../actions/user';
 import { getAuthToken } from './../api';
+/* eslint-disable import/named */
+import { Location, Permissions } from 'expo';
 
 class Home extends Component {
+    constructor (props) {
+        super(props);
+        this.state = { permissionGranted: false };
+        this.getLocation(props.setLocation);
+    }
+
+    async getLocation (cb) {
+        const { status } = await Permissions.askAsync(Permissions.LOCATION);
+        this.setState({ permissionGranted: status === 'granted' });
+        const { coords } = await Location.getCurrentPositionAsync();
+        cb({ lat: coords.latitude, lon: coords.longitude });
+    }
+
     render () {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-                <Text>Home Screen</Text>
-                <Button onPress={() => navigate('EventList')} title="Event List" />
+                <Text>Welcome to Eventador!</Text>
+                <Button onPress={() => navigate('EventList')} title="Events" />
                 {this._renderSigninButtons()}
             </View>
         );
@@ -83,7 +98,8 @@ class Home extends Component {
 Home.propTypes = {
     navigation: PropTypes.shape({
         navigate: PropTypes.func
-    })
+    }),
+    setLocation: PropTypes.func.isRequired
 }
 
 Home.navigationOptions = {
@@ -96,7 +112,8 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
     setUser: user => dispatch(setUser(user)),
-    setAuthToken: token => dispatch(setAuthToken(token))
+    setAuthToken: token => dispatch(setAuthToken(token)),
+    setLocation: loc => dispatch(setLocation(loc))
 });
 
 export default connect(
