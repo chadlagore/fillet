@@ -43,11 +43,9 @@ class Home extends Component {
             return (
                 <Button
                     onPress={this._googleSignIn.bind(this)}
-                    style={styles.google_signin}>
-                    <Text>
-                        Sign in with Google
-                    </Text>
-                </Button>
+                    style={styles.google_signin}
+                    title="Sign in with Google"
+                    />
             );
         }
         else {
@@ -60,34 +58,23 @@ class Home extends Component {
         }
     }
 
-    componentDidMount() {
-        GoogleSignin.configure({
-            iosClientId: "148567986475-hjkjihnqn54603235u4rhilh54osclcc.apps.googleusercontent.com",
-            webClientId: "148567986475-b6jh9fbl1d0186ku4gibml8619hafbnm.apps.googleusercontent.com",
-            offlineAccess: true
-        })
-        .then(() => {
-            GoogleSignin.signOut();
-            this.props.setUser(undefined);
-        })
-        .done();
-    }
-
     _googleSignIn() {
-        let user = await Google.logInAsync({
+        Google.logInAsync({
             iosClientId: "148567986475-hjkjihnqn54603235u4rhilh54osclcc.apps.googleusercontent.com",
             webClientId: "148567986475-b6jh9fbl1d0186ku4gibml8619hafbnm.apps.googleusercontent.com"
-        });
-        console.log(user.idToken);
-        this.props.setUser(user);
-        getAuthToken({
-            service: 'google',
-            token: user.idToken
         })
-        .then(
-            token => this.props.setAuthToken(token),
-            err => console.log(err)
-        );
+        .then(user => {
+            console.log(user.idToken);
+            this.props.setUser(user);
+            getAuthToken({
+                service: 'google',
+                token: user.idToken
+            })
+            .then(
+                token => this.props.setAuthToken(token),
+                err => console.log(err)
+            );
+        })
     }
 }
 

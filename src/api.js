@@ -1,7 +1,7 @@
 import { buildRequest } from './util';
 import Moment from 'moment';
 
-const API_BASE = 'http://beluga-prod.herokuapp.com';
+const API_BASE = 'https://beluga-prod.herokuapp.com';
 
 const api = buildRequest(API_BASE);
 
