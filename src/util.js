@@ -14,7 +14,9 @@ export const buildRequest = base => (method, route) => (params, body, headers) =
     const len = keys.length;
     if (len) {
         url = keys.reduce((u, k, i) => {
-            return `${u}${encodeURIComponent(k)}=${encodeURIComponent(params[k])}${i < len - 1 ? '&' : ''}`;
+            let encodedKey = encodeURIComponent(k);
+            let encodedValue = encodeURIComponent(params[k]);
+            return `${u}${encodedKey}=${encodedValue}${i < len - 1 ? '&' : ''}`;
         }, `${url}?`);
     }
     return [url, {

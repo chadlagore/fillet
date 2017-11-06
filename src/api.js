@@ -38,7 +38,7 @@ export async function getEvents (opts) {
  * This token is good for making other backend requests.
  * `opts` is sent as a JSON payload in the request.
  */
-export async function getAuthToken(opts) {
+export async function getAuthToken (opts) {
     try {
         const res = await fetch(...authToken(null, opts));
         const res_json = await res.json();

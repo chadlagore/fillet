@@ -38,14 +38,13 @@ class Home extends Component {
         );
     }
 
-    _renderSigninButtons() {
+    _renderSigninButtons () {
         if (!this.props.user) {
             return (
                 <Button
                     onPress={this._googleSignIn.bind(this)}
                     style={styles.google_signin}
-                    title="Sign in with Google"
-                    />
+                    title="Sign in with Google"/>
             );
         }
         else {
@@ -58,19 +57,18 @@ class Home extends Component {
         }
     }
 
-    _googleSignIn() {
+    _googleSignIn () {
         Google.logInAsync({
-            iosClientId: "148567986475-hjkjihnqn54603235u4rhilh54osclcc.apps.googleusercontent.com",
-            webClientId: "148567986475-b6jh9fbl1d0186ku4gibml8619hafbnm.apps.googleusercontent.com"
-        })
-        .then(user => {
-            console.log(user.idToken);
+            iosClientId: '148567986475-hjkjihnqn54603235u4rhilh54osclcc.apps.googleusercontent.com',
+            webClientId: '148567986475-b6jh9fbl1d0186ku4gibml8619hafbnm.apps.googleusercontent.com'
+        }).
+        then(user => {
             this.props.setUser(user);
             getAuthToken({
                 service: 'google',
                 token: user.idToken
-            })
-            .then(
+            }).
+            then(
                 token => this.props.setAuthToken(token),
                 err => console.log(err)
             );
@@ -82,7 +80,10 @@ Home.propTypes = {
     navigation: PropTypes.shape({
         navigate: PropTypes.func
     }),
-    setLocation: PropTypes.func.isRequired
+    setLocation: PropTypes.func.isRequired,
+    setUser: PropTypes.func.isRequired,
+    setAuthToken: PropTypes.func.isRequired,
+    token: PropTypes.string
 }
 
 Home.navigationOptions = {
