@@ -11,7 +11,7 @@ import { setLocation } from './../actions/user';
 /* eslint-disable import/named */
 import { Location, Permissions } from 'expo';
 
-class Home extends Component {
+export class Home extends Component {
     constructor (props) {
         super(props);
         this.state = { permissionGranted: false };
