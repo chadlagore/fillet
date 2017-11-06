@@ -6,8 +6,12 @@ import renderer from 'react-test-renderer';
 
 test('should render', () => {
     const navigation = { navigate: () => {} };
-    const tree = renderer.create(
+    let tree = renderer.create(
         <EventList navigation={navigation} events={[MockEvent]} />
+    ).toJSON();
+    expect(tree).toBeTruthy();
+    tree = renderer.create(
+        <EventList navigation={navigation} events={[]} />
     ).toJSON();
     expect(tree).toBeTruthy();
 });

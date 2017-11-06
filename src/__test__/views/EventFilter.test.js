@@ -5,8 +5,14 @@ import MockEvent from './../../mocks/event';
 import renderer from 'react-test-renderer';
 
 test('should render', () => {
-    const tree = renderer.create(
+    const rendered = renderer.create(
         <EventFilter />
-    ).toJSON();
-    expect(tree).toBeTruthy();
+    );
+    expect(rendered.toJSON()).toBeTruthy();
+    rendered.getInstance()._showDateTimePicker();
+    expect(rendered.toJSON()).toBeTruthy();
+    rendered.getInstance()._hideDateTimePicker();
+    expect(rendered.toJSON()).toBeTruthy();
+    rendered.getInstance()._handleDatePicked(new Date());
+    expect(rendered.toJSON()).toBeTruthy();
 });
