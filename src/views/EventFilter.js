@@ -14,7 +14,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 
 
-class EventFilter extends Component {
+export class EventFilter extends Component {
     state = {
         isDateTimePickerVisible: false,
     };
@@ -73,7 +73,6 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(EventFilter);
-
 
 const styles = StyleSheet.create({
     container: {

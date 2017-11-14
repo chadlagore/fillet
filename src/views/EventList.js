@@ -13,7 +13,7 @@ import { addEvents, clearEvents } from './../actions/events';
 import { getEvents } from './../api';
 import mockEvent from './../mocks/event';
 
-class EventList extends Component {
+export class EventList extends Component {
     constructor (props) {
         super(props);
         getEvents({ ...props.location }).then(
