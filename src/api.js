@@ -41,8 +41,8 @@ export async function getEvents (opts) {
 export async function getAuthToken (opts) {
     try {
         const res = await fetch(...authToken(null, opts));
-        const res_json = await res.json();
-        return res_json.token;
+        const resJson = await res.json();
+        return resJson.token;
     }
     catch (err) {
         throw err;

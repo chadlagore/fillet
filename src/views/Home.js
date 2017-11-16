@@ -18,6 +18,7 @@ class Home extends Component {
         super(props);
         this.state = { permissionGranted: false };
         this.getLocation(props.setLocation);
+        this._googleSignIn = this._googleSignIn.bind(this);
     }
 
     async getLocation (cb) {
@@ -42,8 +43,8 @@ class Home extends Component {
         if (!this.props.user) {
             return (
                 <Button
-                    onPress={this._googleSignIn.bind(this)}
-                    style={styles.google_signin}
+                    onPress={this._googleSignIn}
+                    style={styles.googleSignIn}
                     title="Sign in with Google"/>
             );
         }
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff'
     },
-    google_signin: {
+    googleSignIn: {
         height: 60,
         width: 280
     }
