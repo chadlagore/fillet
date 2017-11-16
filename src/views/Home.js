@@ -70,9 +70,10 @@ class Home extends Component {
             }).
             then(
                 token => this.props.setAuthToken(token),
+                /* eslint-disable no-console */
                 err => console.log(err)
             );
-        })
+        });
     }
 }
 
@@ -83,7 +84,8 @@ Home.propTypes = {
     setLocation: PropTypes.func.isRequired,
     setUser: PropTypes.func.isRequired,
     setAuthToken: PropTypes.func.isRequired,
-    token: PropTypes.string
+    token: PropTypes.string,
+    user: PropTypes.object
 }
 
 Home.navigationOptions = {
