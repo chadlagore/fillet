@@ -1,19 +1,19 @@
-import { buildURL } from './util';
+import { buildRequest } from './util';
 import Moment from 'moment';
 
-const API_BASE = 'http://beluga-prod.herokuapp.com';
+const API_BASE = 'https://beluga-prod.herokuapp.com';
 
-const api = buildURL(API_BASE);
+const api = buildRequest(API_BASE);
 
-const events = api('/events');
-// const users = api('/users');
+const events = api('GET', '/events');
+const authToken = api('POST', '/sessions');
 
 // Pulls events from the API.
 // `opts` constrains the query
 // See BE docs for which params are accepted.
 export async function getEvents (opts) {
     try {
-        const res = await fetch(events(opts));
+        const res = await fetch(...events(opts, null, token));
         const json = await res.json();
         return json.results.map(e => ({
             title: e.title,
@@ -33,3 +33,18 @@ export async function getEvents (opts) {
     }
 }
 
+/*
+ * Retrieve an auth token from the backend.
+ * This token is good for making other backend requests.
+ * `opts` is sent as a JSON payload in the request.
+ */
+export async function getAuthToken (opts) {
+    try {
+        const res = await fetch(...authToken(null, opts));
+        const resJson = await res.json();
+        return resJson.token;
+    }
+    catch (err) {
+        throw err;
+    }
+}

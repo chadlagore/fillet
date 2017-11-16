@@ -83,6 +83,7 @@ const mapDispatchToProps = dispatch => ({
 // Pull events from redux into props so we can display it
 const mapStateToProps = state => ({
     events: state.events.events,
+    token: state.user.token,
     location: state.user.location
 });
 
