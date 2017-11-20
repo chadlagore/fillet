@@ -6,10 +6,12 @@ import {
     TouchableOpacity,
     Text,
     View,
-    Picker
+    Picker,
+    Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import { addEvents, clearEvents } from './../actions/events';
+import { addCategories } from './../actions/categories';
 import { getEvents, getCategories } from './../api';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
@@ -47,9 +49,18 @@ export class EventFilter extends Component {
     _handleCategoryPicked = (category) => {
         getEvents({ ...this.props.location, category}).then(
                 res => this.props.addEvents(res),
-                err => console.log(err) || this.props.addEvents([mockEvent])
+                err => console.log(err) || this.props.addEvents([mockEvent]),
+                Alert.alert(
+                    'Chosen Category',
+                    category,
+                    [
+                      {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                  )
         );
-        console.log('A category has been picked: ', Moment(date));
+        this.setState({ selected: category })
+        console.log('A category has been picked: ', category);
     };
 
     render() {
@@ -59,11 +70,12 @@ export class EventFilter extends Component {
                 <Picker
                     mode="dropdown"
                     selectedValue={this.state.selected}
-                    onValueChange={()=>{}}> //add your function to handle picker state change
-                    {this.props.categories.map((item, index) => {
-                        return (<Item label={item} value={index} key={index}/>)
+                    onValueChange={(category)=>{this._handleCategoryPicked(category)}}>
+                    {(this.props.categories || []).map((item, index) => {
+                        return (<Picker.Item label={item} value={item} key={index}/>)
                     })}
                 </Picker>
+                <Text style={styles.text}>Choose an event category</Text>
                 <DateTimePicker
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm={this._handleDatePicked}
@@ -91,7 +103,7 @@ const mapDispatchToProps = dispatch => ({
 // Pull new events from redux into props.
 const mapStateToProps = state => ({
     events: state.events.events,
-    categories: state.categories
+    categories: state.categories.categories
 });
 
 
@@ -104,5 +116,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff'
+    },
+    text: {
+        textAlign:'center',
+        fontWeight: 'bold'
     }
 });

@@ -10,5 +10,7 @@ export default (state = initialState, { type, payload }) => {
         // Add the categories to the store
         case types.CATEGORIES_ADD:
             return { ...state, categories: [...payload] };
+        default:
+            return state;
     }
 };
