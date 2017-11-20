@@ -8,8 +8,9 @@ export const mirror = list => list.reduce((map, str) => ({ [str]: str, ...map })
 export const prepend = (list, preface) => list.map(el => `${preface}_${el}`);
 
 // Constructs a request from a base, a route, and a set of parameters.
-export const buildRequest = base => (method, route) => (params, body, headers) => {
+export const buildRequest = base => (method, route) => (params, body, headers, token) => {
     let url = `${base}${route}`;
+    console.log(url);
     const keys = Object.keys(params || {});
     const len = keys.length;
     if (len) {
@@ -19,9 +20,14 @@ export const buildRequest = base => (method, route) => (params, body, headers) =
             return `${u}${encodedKey}=${encodedValue}${i < len - 1 ? '&' : ''}`;
         }, `${url}?`);
     }
+    console.log(url);
     return [url, {
         method: method,
-        headers: { ...headers, 'Content-Type': 'application/json' },
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
         body: (body ? JSON.stringify(body) : null)
     }];
 }

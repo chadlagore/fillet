@@ -16,6 +16,7 @@ import mockEvent from './../mocks/event';
 export class EventList extends Component {
     constructor (props) {
         super(props);
+        console.log(props.location);
         getEvents({ ...props.location }).then(
             res => props.addEvents(res),
             () => props.addEvents([mockEvent])

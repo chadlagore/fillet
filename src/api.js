@@ -8,12 +8,18 @@ const api = buildRequest(API_BASE);
 const events = api('GET', '/events');
 const authToken = api('POST', '/sessions');
 
+// This is a huge hack. We just set this whenever we get a successful
+// response from getAuthToken :-)
+let token = '';
+
 // Pulls events from the API.
 // `opts` constrains the query
 // See BE docs for which params are accepted.
 export async function getEvents (opts) {
+    console.log(token);
     try {
-        const res = await fetch(...events(opts, null, token));
+        const args = events(opts, null, {}, token);
+        const res = await fetch(...args);
         const json = await res.json();
         return json.results.map(e => ({
             title: e.title,
@@ -42,6 +48,9 @@ export async function getAuthToken (opts) {
     try {
         const res = await fetch(...authToken(null, opts));
         const resJson = await res.json();
+        if (resJson.token) {
+            token = resJson.token;
+        }
         return resJson.token;
     }
     catch (err) {
