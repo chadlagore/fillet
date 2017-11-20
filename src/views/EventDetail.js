@@ -4,14 +4,24 @@ import {
     StyleSheet,
     ScrollView,
     Text,
+    TouchableHighlight,
     View,
+    Modal,
     Button
 } from 'react-native';
+import { connect } from 'react-redux';
 /* eslint-disable import/default */
 import MapView from 'react-native-maps';
 import Event from './../models/event';
 
 export default class EventDetail extends Component {
+    constructor (props) {
+        super(props);
+        this._renderRSVPModal = this._renderRSVPModal.bind(this);
+        this.handleRSVP = this.handleRSVP.bind(this);
+        this.state = { modalVisible: false };
+    }
+
     render () {
         const { event } = this.props.navigation.state.params;
         const { title, description, venue, start, location } = event;
@@ -25,7 +35,13 @@ export default class EventDetail extends Component {
                     <Text style={styles.time}>
                         When: {start.format('dddd, MMMM D [at] h:mmA')}
                     </Text>
+                    {
+                        this.state.rsvped ?
+                            <Text style={styles.time}>You are RSVPed to this event</Text> :
+                            <Button onPress={this.handleRSVP} title="RSVP" />
+                    }
                 </View>
+                {this._renderRSVPModal()}
                 <MapView
                     style={styles.map}
                     initialRegion={{
@@ -48,17 +64,35 @@ export default class EventDetail extends Component {
         );
     }
 
+    _renderRSVPModal () {
+        return (
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.state.modalVisible}
+                onRequestClose={() => this.setState({ rsvped: true })}>
+                <View style={styles.modalContainer}>
+                    <Text style={styles.modalTitle}>RSVP Successful!</Text>
+                    <Button
+                        onPress={() => this.setState({ modalVisible: false, rsvped: true })}
+                        title="Awesome!"/>
+                </View>
+            </Modal>
+        )
+    }
+
     handleRSVP () {
         /* eslint-disable no-console */
         console.log('Pressed RSVP');
+        this.setState({ modalVisible: true });
     }
 }
 
-const rsvpButton = () => (
-    <Button
-        onPress={() => console.log('TODO make this do something')}
-        title="RSVP" />
-);
+// const rsvpButton = (rsvped) => (
+//     <Button
+//         onPress={() => console.log('TODO make this do something')}
+//         title="RSVP" />
+// );
 
 EventDetail.propTypes = {
     navigation: PropTypes.shape({
@@ -71,8 +105,8 @@ EventDetail.propTypes = {
 }
 
 EventDetail.navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.event.title,
-    headerRight: rsvpButton(navigation.state.params.event)
+    title: navigation.state.params.event.title
+    // headerRight: rsvpButton(navigation.state.params.event)
 });
 
 const styles = StyleSheet.create({
@@ -98,5 +132,14 @@ const styles = StyleSheet.create({
     },
     description: {
         paddingHorizontal: 8
+    },
+    modalContainer: {
+        backgroundColor: '#29e870',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    modalTitle: {
+        fontSize: 20
     }
 });
