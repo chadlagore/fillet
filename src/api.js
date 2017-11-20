@@ -7,6 +7,7 @@ const api = buildRequest(API_BASE);
 
 const events = api('GET', '/events');
 const authToken = api('POST', '/sessions');
+const categories = api('GET', '/categories');
 
 // Pulls events from the API.
 // `opts` constrains the query
@@ -43,6 +44,18 @@ export async function getAuthToken (opts) {
         const res = await fetch(...authToken(null, opts));
         const resJson = await res.json();
         return resJson.token;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+export async function getCategories () {
+    try {
+        const res = await fetch(...categories());
+        const json = await res.json();
+        console.log(json.results);
+        return json.results;
     }
     catch (err) {
         throw err;
