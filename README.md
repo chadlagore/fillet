@@ -1,5 +1,6 @@
 fillet
 ===================
+[![Coverage Status](https://coveralls.io/repos/github/chadlagore/fillet/badge.svg?branch=jordan%2Ftests)](https://coveralls.io/github/chadlagore/fillet?branch=jordan%2Ftests)
 
 Event tracking, rating and prioritizing for your event going pleasure.
 

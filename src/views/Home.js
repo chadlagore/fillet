@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-    Button,
+    ActivityIndicator,
     StyleSheet,
     Text,
+    TouchableOpacity,
+    Image,
     View
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -19,6 +21,8 @@ export class Home extends Component {
         this.state = { permissionGranted: false };
         this.getLocation(props.setLocation);
         this._googleSignIn = this._googleSignIn.bind(this);
+        this._renderButtons = this._renderButtons.bind(this);
+        this._renderSpinner = this._renderSpinner.bind(this);
     }
 
     async getLocation (cb) {
@@ -29,31 +33,44 @@ export class Home extends Component {
     }
 
     render () {
-        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-                <Text>Welcome to Eventador!</Text>
-                <Button onPress={() => navigate('EventList')} title="Events" />
-                {this._renderSigninButtons()}
+                {
+                    this.state.loading ?
+                        this._renderSpinner() :
+                        this._renderButtons()
+                }
             </View>
         );
     }
 
-    _renderSigninButtons () {
-        if (!this.props.user) {
+    _renderSpinner () {
+        return (
+            <ActivityIndicator size="large" />
+        );
+    }
+
+    _renderButtons () {
+        if (!this.props.token) {
             return (
-                <Button
-                    onPress={this._googleSignIn}
-                    style={styles.googleSignIn}
-                    title="Sign in with Google"/>
+                <View>
+                    <TouchableOpacity
+                        onPress={this._googleSignIn}
+                        activeOpacity={0.6}>
+                        <Image
+                            style={{ width: 386, height: 96 }}
+                            source={{ uri:  'http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png' }} />
+                    </TouchableOpacity>
+                </View>
             );
-        }
-        else {
+        } else {
             return (
-                <Text>
-                    Token:
-                    {this.props.token}
-                </Text>
+                <TouchableOpacity
+                    style={styles.viewEvents}
+                    activeOpacity={0.6}
+                    onPress={() => this.props.navigation.navigate('EventList')}>
+                    <Text style={styles.viewEventsText}>Discover Events</Text>
+                </TouchableOpacity>
             );
         }
     }
@@ -65,15 +82,19 @@ export class Home extends Component {
         }).
         then(user => {
             this.props.setUser(user);
+            this.setState({ loading: true });
             getAuthToken({
                 service: 'google',
                 token: user.idToken
             }).
-            then(
-                token => this.props.setAuthToken(token),
+            then(token => {
+                this.props.setAuthToken(token);
+                this.setState({ loading: false });
+            }, err => {
+                this.setState({ loading: false });
                 /* eslint-disable no-console */
-                err => console.log(err)
-            );
+                console.error(err);
+            });
         });
     }
 }
@@ -90,7 +111,7 @@ Home.propTypes = {
 }
 
 Home.navigationOptions = {
-    title: 'Home'
+    title: 'Eventador'
 };
 
 const mapStateToProps = state => ({
@@ -111,10 +132,19 @@ export default connect(
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    googleSignIn: {
-        height: 60,
-        width: 280
+    viewEvents: {
+        backgroundColor: '#29e870',
+        borderRadius: 4,
+        borderWidth: 1,
+        padding: 16,
+        borderColor: 'transparent'
+    },
+    viewEventsText: {
+        fontSize: 20,
+        color: 'white'
     }
 });
