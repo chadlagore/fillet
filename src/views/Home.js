@@ -52,7 +52,6 @@ export class Home extends Component {
 
     _reloadComponent() {
         this.props.setAuthToken(undefined);
-        this._renderButtons()
     }
 
     _renderButtons () {

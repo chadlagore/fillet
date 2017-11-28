@@ -33,7 +33,7 @@ export class EventFilter extends Component {
     _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
     _handleDatePicked = (date) => {
-        _date = Moment(date);
+        let _date = Moment(date);
         start_time = _date.format('YYYY-MM-DD');
         end_time = _date.add(1, 'days').format('YYYY-MM-DD');
 

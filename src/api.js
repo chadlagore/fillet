@@ -17,7 +17,6 @@ let token = 'eyJ0eXBlIjoiYmVhcmVyIiwidmFsIjozfS4xclU2X0JoWFlLbXcwc3NCM3N5dTVMRWp
 // `opts` constrains the query
 // See BE docs for which params are accepted.
 export async function getEvents (opts) {
-    console.log(token);
     try {
         const args = events(opts, null, {}, token);
         const res = await fetch(...args);
