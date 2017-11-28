@@ -53,11 +53,13 @@ const styles = StyleSheet.create({
         borderBottomColor: '#ccc'
     },
     title: {
+        fontFamily: 'Apple SD Gothic Neo',
         fontSize: 16,
-        color: '#333'
+        color: '#2a2a2a'
     },
     time: {
+        fontFamily: 'Apple SD Gothic Neo',
         fontSize: 14,
-        color: '#666'
+        color: '#2a2a2a'
     }
 });

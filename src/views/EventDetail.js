@@ -192,12 +192,15 @@ const styles = StyleSheet.create({
         paddingBottom: 8
     },
     venue: {
+        fontFamily: 'Apple SD Gothic Neo',
         fontSize: 22,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#2a2a2a'
     },
     time: {
+        fontFamily: 'Apple SD Gothic Neo',
         fontSize: 16,
-        color: '#999'
+        color: '#2a2a2a'
     },
     map: {
         flex: 1,
@@ -219,6 +222,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     modalTitle: {
-        fontSize: 20
-    }
+        fontSize: 20,
+        fontFamily: 'Apple SD Gothic Neo',
+        textAlign: 'center',
+        color: '#2a2a2a'
+    },
 });

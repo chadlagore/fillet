@@ -50,27 +50,46 @@ export class Home extends Component {
         );
     }
 
+    _reloadComponent() {
+        this.props.setAuthToken(undefined);
+    }
+
     _renderButtons () {
         if (!this.props.token) {
             return (
                 <View>
+                    <Text style={styles.titleText}>Welcome to Eventador</Text>
+                    <Text style={styles.baseText}>Let's find you something to do tonight</Text>
+                    <Text style={styles.baseText}>{'\n\n\n'}</Text>
                     <TouchableOpacity
                         onPress={this._googleSignIn}
                         activeOpacity={0.6}>
                         <Image
-                            style={{ width: 386, height: 96 }}
-                            source={{ uri:  'http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png' }} />
+                            style={{ width: 350, height: 45 }}
+                            source={{ uri: 'https://glow-guides.disciplemedia.com/assets/google_login_button-6474359c9c06fef79ddc3d744342cca87e0b3ef8be1d0d7b8d71c22347c84075.png' }} />
                     </TouchableOpacity>
                 </View>
             );
         } else {
             return (
-                <TouchableOpacity
-                    style={styles.viewEvents}
-                    activeOpacity={0.6}
-                    onPress={() => this.props.navigation.navigate('EventList')}>
-                    <Text style={styles.viewEventsText}>Discover Events</Text>
-                </TouchableOpacity>
+                <View>
+                    <Image
+                        source={{ uri: 'http://lazyacres.events/wp-content/uploads/2015/08/events.jpg' }}
+                        style={{width: 400, height: 200}}
+                    />
+                    <TouchableOpacity
+                        style={styles.viewEvents}
+                        activeOpacity={0.6}
+                        onPress={() => this.props.navigation.navigate('EventList')}>
+                        <Text style={styles.baseText}>Discover Events</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.viewEvents}
+                        activeOpacity={0.6}
+                        onPress={() => this._reloadComponent()}>
+                        <Text style={styles.baseText}>Log Out</Text>
+                    </TouchableOpacity>
+                </View>
             );
         }
     }
@@ -130,6 +149,18 @@ export default connect(
 )(Home);
 
 const styles = StyleSheet.create({
+    titleText: {
+        fontFamily: 'Apple SD Gothic Neo',
+        fontSize: 32,
+        textAlign: 'center',
+        color: '#2a2a2a'        
+    },
+    baseText: {
+        fontFamily: 'Apple SD Gothic Neo',
+        fontSize: 25,
+        textAlign: 'center',
+        color: '#2a2a2a'
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -137,14 +168,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     viewEvents: {
-        backgroundColor: '#29e870',
         borderRadius: 4,
         borderWidth: 1,
         padding: 16,
         borderColor: 'transparent'
-    },
-    viewEventsText: {
-        fontSize: 20,
-        color: 'white'
     }
 });
