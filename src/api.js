@@ -11,7 +11,7 @@ const categories = api('GET', '/categories');
 
 // This is a huge hack. We just set this whenever we get a successful
 // response from getAuthToken :-)
-let token = '';
+let token = 'eyJ0eXBlIjoiYmVhcmVyIiwidmFsIjozfS4xclU2X0JoWFlLbXcwc3NCM3N5dTVMRWpCT28=';
 
 // Pulls events from the API.
 // `opts` constrains the query
