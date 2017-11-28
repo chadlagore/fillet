@@ -7,6 +7,7 @@ const api = buildRequest(API_BASE);
 
 const events = api('GET', '/events');
 const authToken = api('POST', '/sessions');
+const categories = api('GET', '/categories');
 
 // This is a huge hack. We just set this whenever we get a successful
 // response from getAuthToken :-)
@@ -52,6 +53,18 @@ export async function getAuthToken (opts) {
             token = resJson.token;
         }
         return resJson.token;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+export async function getCategories () {
+    try {
+        const res = await fetch(...categories());
+        const json = await res.json();
+        console.log(json.results);
+        return json.results;
     }
     catch (err) {
         throw err;
