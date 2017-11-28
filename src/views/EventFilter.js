@@ -33,16 +33,22 @@ export class EventFilter extends Component {
     _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
     _handleDatePicked = (date) => {
+        _date = Moment(date);
+        start_time = _date.format('YYYY-MM-DD');
+        end_time = _date.add(1, 'days').format('YYYY-MM-DD');
+
+        console.log('A start time has been picked: ', start_time);
+        console.log('An end time has been picked: ', end_time);
+
         getEvents(
             // Set start/end window because backend requires both.
             { ...this.props.location,
-                start_time: Moment(date).format('YYYY-MM-DD'),
-                end_time: Moment(date).add(1, 'days').format('YYYY-MM-DD') }
+                start_time: start_time,
+                end_time: end_time}
             ).then(
                 res => this.props.addEvents(res),
                 err => console.log(err) || this.props.addEvents([mockEvent])
         );
-        console.log('A date has been picked: ', Moment(date));
         this._hideDateTimePicker();
     };
 

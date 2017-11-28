@@ -31,10 +31,10 @@ export class EventList extends Component {
             return (
                 <ScrollView style={styles.container}>
                     {
-                        events.map(event => (
+                        events.map((event, i) => (
                             <EventCell
                                 event={event}
-                                key={event.title}
+                                key={event.title+i}
                                 onPress={() => navigate('EventDetail', { event })} />
                         ))
                     }
