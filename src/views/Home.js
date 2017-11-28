@@ -23,6 +23,7 @@ export class Home extends Component {
         this._googleSignIn = this._googleSignIn.bind(this);
         this._renderButtons = this._renderButtons.bind(this);
         this._renderSpinner = this._renderSpinner.bind(this);
+        this._renderWelcomeMessage = this._renderWelcomeMessage.bind(this);
     }
 
     async getLocation (cb) {
@@ -73,6 +74,7 @@ export class Home extends Component {
         } else {
             return (
                 <View>
+                    {this._renderWelcomeMessage()}
                     <Image
                         source={{ uri: 'http://lazyacres.events/wp-content/uploads/2015/08/events.jpg' }}
                         style={{width: 400, height: 200}}
@@ -94,13 +96,26 @@ export class Home extends Component {
         }
     }
 
+    _renderWelcomeMessage () {
+        if (this.props.user) {
+            return (
+                <Text style={styles.welcomeMessage}>
+                    Welcome to Eventador, {this.props.user.givenName}!
+                </Text>
+            );
+        }
+        else {
+            return null;
+        }
+    }
+
     _googleSignIn () {
         Google.logInAsync({
             iosClientId: '148567986475-hjkjihnqn54603235u4rhilh54osclcc.apps.googleusercontent.com',
             webClientId: '148567986475-b6jh9fbl1d0186ku4gibml8619hafbnm.apps.googleusercontent.com'
         }).
         then(user => {
-            this.props.setUser(user);
+            this.props.setUser(user.user);
             this.setState({ loading: true });
             getAuthToken({
                 service: 'google',
@@ -172,5 +187,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 16,
         borderColor: 'transparent'
+    },
+    welcomeMessage: {
+        fontFamily: 'Apple SD Gothic Neo',
+        fontSize: 18,
+        textAlign: 'center',
+        color: '#2a2a2a'
     }
 });
