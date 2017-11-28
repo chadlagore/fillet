@@ -23,7 +23,6 @@ export class Home extends Component {
         this._googleSignIn = this._googleSignIn.bind(this);
         this._renderButtons = this._renderButtons.bind(this);
         this._renderSpinner = this._renderSpinner.bind(this);
-        this._renderWelcomeMessage = this._renderWelcomeMessage.bind(this);
     }
 
     async getLocation (cb) {
