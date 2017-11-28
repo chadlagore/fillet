@@ -73,7 +73,7 @@ export class Home extends Component {
         } else {
             return (
                 <View>
-                    <Text style={styles.titleText}>Hello, { this.props.user.user.givenName } </Text>
+                    <Text style={styles.titleText}>Hello, { this.props.user.givenName } </Text>
                     <Image
                         source={{ uri: 'http://lazyacres.events/wp-content/uploads/2015/08/events.jpg' }}
                         style={{width: 400, height: 200}}
