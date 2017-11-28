@@ -74,7 +74,7 @@ export class Home extends Component {
         } else {
             return (
                 <View>
-                    {this._renderWelcomeMessage()}
+                    <Text style={styles.titleText}>Hello, { this.props.user.user.givenName } </Text>
                     <Image
                         source={{ uri: 'http://lazyacres.events/wp-content/uploads/2015/08/events.jpg' }}
                         style={{width: 400, height: 200}}
@@ -93,19 +93,6 @@ export class Home extends Component {
                     </TouchableOpacity>
                 </View>
             );
-        }
-    }
-
-    _renderWelcomeMessage () {
-        if (this.props.user) {
-            return (
-                <Text style={styles.welcomeMessage}>
-                    Welcome to Eventador, {this.props.user.givenName}!
-                </Text>
-            );
-        }
-        else {
-            return null;
         }
     }
 
@@ -187,11 +174,5 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 16,
         borderColor: 'transparent'
-    },
-    welcomeMessage: {
-        fontFamily: 'Apple SD Gothic Neo',
-        fontSize: 18,
-        textAlign: 'center',
-        color: '#2a2a2a'
     }
 });

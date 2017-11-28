@@ -22,6 +22,7 @@ class EventDetail extends Component {
     constructor (props) {
         super(props);
         this._renderRSVPModal = this._renderRSVPModal.bind(this);
+        this._renderAttendeeList = this._renderAttendeeList.bind(this);
         this._renderAttendeeListItem = this._renderAttendeeListItem.bind(this);
     }
 
@@ -73,11 +74,7 @@ class EventDetail extends Component {
                 <Text style={styles.attendeesHeader}>
                     Attendees
                 </Text>
-                <FlatList
-                    style={styles.attendeesList}
-                    data={event.attendees}
-                    renderItem={this._renderAttendeeListItem}
-                    keyExtractor={(item) => (item.avatar)} />
+                {this._renderAttendeeList(event)}
             </ScrollView>
         );
     }
@@ -96,6 +93,23 @@ class EventDetail extends Component {
                 </View>
             </Modal>
         )
+    }
+
+    _renderAttendeeList (event) {
+        if (event.attendees && event.attendees.length > 0) {
+            return (
+                <FlatList
+                    style={styles.attendeesList}
+                    data={event.attendees}
+                    renderItem={this._renderAttendeeListItem}
+                    keyExtractor={(item) => (item.avatar)} />
+            );
+        }
+        else {
+            return (
+                <Text style={styles.attendeesList}>Nobody has RSVP'd yet!</Text>
+            );
+        }
     }
 
     _renderAttendeeListItem (item) {
@@ -258,12 +272,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     attendeesList: {
-        paddingBottom: 20
+        paddingHorizontal: 8,
+        marginBottom: 16
     },
     attendeeListItem: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        paddingHorizontal: 8,
+        alignItems: 'center',
         height: 64
     },
     attendeeAvatar: {
