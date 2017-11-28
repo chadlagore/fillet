@@ -66,7 +66,12 @@ export class EventFilter extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Button onPress={this._showDateTimePicker} title="Set date" />
+                <TouchableOpacity
+                    onPress={this._showDateTimePicker}
+                    style={styles.viewDates}
+                    activeOpacity={0.6}>
+                    <Text style={styles.text}>Set Date</Text>
+                </TouchableOpacity>
                 <Picker
                     mode="dropdown"
                     selectedValue={this.state.selected}
@@ -118,7 +123,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     text: {
-        textAlign:'center',
-        fontWeight: 'bold'
+        fontFamily: 'Apple SD Gothic Neo',
+        fontSize: 25,
+        textAlign: 'center',
+        color: '#2a2a2a'
+    },
+    viewDates: {
+        borderRadius: 4,
+        borderWidth: 1,
+        padding: 16,
+        borderColor: 'transparent'
     }
 });

@@ -22,6 +22,7 @@ export async function getEvents (opts) {
         const args = events(opts, null, {}, token);
         const res = await fetch(...args);
         const json = await res.json();
+        console.log("Collected " + json.results.length + " events");
         return json.results.map(e => ({
             title: e.title,
             location: e.location,

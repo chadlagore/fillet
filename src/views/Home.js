@@ -74,13 +74,16 @@ export class Home extends Component {
         } else {
             return (
                 <View>
+                    <Image
+                        source={{ uri: 'http://lazyacres.events/wp-content/uploads/2015/08/events.jpg' }}
+                        style={{width: 400, height: 200}}
+                    />
                     <TouchableOpacity
                         style={styles.viewEvents}
                         activeOpacity={0.6}
                         onPress={() => this.props.navigation.navigate('EventList')}>
                         <Text style={styles.baseText}>Discover Events</Text>
                     </TouchableOpacity>
-                    <Text style={styles.baseText}>{'\n\n'}</Text>
                     <TouchableOpacity
                         style={styles.viewEvents}
                         activeOpacity={0.6}
