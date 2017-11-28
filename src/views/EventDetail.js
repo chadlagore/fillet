@@ -6,7 +6,9 @@ import {
     Text,
     View,
     Modal,
-    Button
+    Button,
+    FlatList,
+    Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import store from './../store';
@@ -20,6 +22,8 @@ class EventDetail extends Component {
     constructor (props) {
         super(props);
         this._renderRSVPModal = this._renderRSVPModal.bind(this);
+        this._renderAttendeeList = this._renderAttendeeList.bind(this);
+        this._renderAttendeeListItem = this._renderAttendeeListItem.bind(this);
     }
 
     render () {
@@ -67,6 +71,10 @@ class EventDetail extends Component {
                 <Text style={styles.description}>
                     {description.text}
                 </Text>
+                <Text style={styles.attendeesHeader}>
+                    Attendees
+                </Text>
+                {this._renderAttendeeList(event)}
             </ScrollView>
         );
     }
@@ -85,6 +93,36 @@ class EventDetail extends Component {
                 </View>
             </Modal>
         )
+    }
+
+    _renderAttendeeList (event) {
+        if (event.attendees && event.attendees.length > 0) {
+            return (
+                <FlatList
+                    style={styles.attendeesList}
+                    data={event.attendees}
+                    renderItem={this._renderAttendeeListItem}
+                    keyExtractor={(item) => (item.avatar)} />
+            );
+        }
+        else {
+            return (
+                <Text style={styles.attendeesList}>Nobody has RSVP'd yet!</Text>
+            );
+        }
+    }
+
+    _renderAttendeeListItem (item) {
+        return (
+            <View style={styles.attendeeListItem}>
+                <Image
+                    style={styles.attendeeAvatar}
+                    source={{uri: item.item.avatar}} />
+                <Text style={styles.attendeeName}>
+                    {item.item.given_name} {item.item.surname}
+                </Text>
+            </View>
+        );
     }
 }
 
@@ -227,4 +265,28 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#2a2a2a'
     },
+    attendeesHeader: {
+        paddingHorizontal: 8,
+        paddingTop: 12,
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
+    attendeesList: {
+        paddingHorizontal: 8,
+        marginBottom: 16
+    },
+    attendeeListItem: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        height: 64
+    },
+    attendeeAvatar: {
+        height: 64,
+        width: 64
+    },
+    attendeeName: {
+        height: 64,
+        paddingLeft: 4
+    }
 });

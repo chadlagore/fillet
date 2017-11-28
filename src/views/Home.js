@@ -101,7 +101,7 @@ export class Home extends Component {
             webClientId: '148567986475-b6jh9fbl1d0186ku4gibml8619hafbnm.apps.googleusercontent.com'
         }).
         then(user => {
-            this.props.setUser(user);
+            this.props.setUser(user.user);
             this.setState({ loading: true });
             getAuthToken({
                 service: 'google',
